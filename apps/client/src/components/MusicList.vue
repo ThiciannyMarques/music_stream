@@ -1,13 +1,19 @@
-<!-- apps/client/src/components/MusicList.vue -->
 <template>
-  <ul>
-    <li v-for="music in musics" :key="music.id">
-      <strong>{{ music.title }}</strong> - {{ music.artist }}
-      <audio :src="music.url" controls></audio>
-      <button @click="deleteMusic(music.id)">Excluir</button>
-      <!-- Botão de edição pode ser adicionado aqui -->
-    </li>
-  </ul>
+  <div>
+    <h2>Lista de Músicas</h2>
+    <ul>
+<li v-for="music in musics" :key="music.id" class="music-card">
+  <div>
+    <strong>{{ music.title }}</strong> - {{ music.artist }}
+  </div>
+  <div class="actions">
+    <button @click="$emit('play', music)">▶️ Tocar</button>
+    <button @click="deleteMusic(music.id)">🗑️ Excluir</button>
+  </div>
+</li>
+
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -34,5 +40,4 @@ export default {
 </script>
 
 <style>
-/* Estilos para a lista de músicas */
 </style>

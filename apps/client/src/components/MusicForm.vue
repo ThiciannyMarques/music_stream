@@ -1,6 +1,6 @@
-<!-- apps/client/src/components/MusicForm.vue -->
 <template>
   <form @submit.prevent="addMusic">
+    <h2>Adicionar Música</h2>
     <input v-model="title" placeholder="Título" required />
     <input v-model="artist" placeholder="Artista" required />
     <input v-model="url" placeholder="URL da música" required />
@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style>
-/* Estilos para o formulário */
+/* Estilo */
 </style>
