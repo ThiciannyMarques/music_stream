@@ -1,4 +1,4 @@
-# README - Projeto Full Stack
+# README - Projeto Music Stream
 
 Este é um projeto full stack que simula um app de stream de musica, que consiste em um cliente Vue.js 3 e um servidor Node.js/Express, com suporte a testes unitários e de integração.
 
