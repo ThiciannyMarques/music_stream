@@ -1,0 +1,54 @@
+@import "./variables";
+@import "bootstrap/scss/bootstrap";
+
+:root {
+  --bs-secondary-color: #969896;
+  --bs-form-check-bg: #8081af;
+}
+
+body {
+  background-color: $dark-bg;
+  color: $text-color;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 10%);
+  }
+}
+
+.card {
+  background-color: $panel-bg;
+  border-color: $border-color;
+  color: $text-color;
+}
+
+.form-control {
+  background-color: lighten($dark-bg, 5%);
+  border-color: $border-color;
+  color: $text-color;
+
+  &:focus {
+    background-color: lighten($dark-bg, 10%);
+    border-color: $primary-color;
+    color: $text-color;
+  }
+}
+
+.list-group-item {
+  background-color: lighten($panel-bg, 5%);
+  border-color: $border-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: lighten($panel-bg, 10%);
+  }
+}
+
+.badge-primary {
+  background-color: $primary-color;
+}

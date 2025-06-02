@@ -8,5 +8,16 @@ module.exports = {
     migrations: {
       directory: './src/db/migrations'
     }
+  },
+   test: {
+    client: 'sqlite3',
+    connection: ':memory:',
+    useNullAsDefault: true,
+    migrations: {
+      directory: './migrations'
+    },
+    seeds: {
+      directory: './seeds/test'
+    }
   }
 };

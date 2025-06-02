@@ -1,77 +1,107 @@
 <template>
-  <div v-if="show" class="fixed inset-0 z-50 flex items-start justify-center pt-16">
-    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" @click="close"></div>
+  <div
+    v-if="show"
+    class="modal fade show d-block"
+    tabindex="-1"
+    role="dialog"
+    style="background-color: rgba(0, 0, 0, 0.7)"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div
+        class="modal-content"
+        style="
+          background: linear-gradient(145deg, #2d1f46, #3b1f57);
+          border: 1px solid #4a2d6b;
+        "
+      >
+        <div class="modal-header border-bottom border-secondary">
+          <h5 class="modal-title text-white">
+            <i class="bi bi-music-note-list me-2"></i>
+            Adicionar à playlist
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            @click="close"
+            aria-label="Close"
+          ></button>
+        </div>
 
-    <div class="relative w-full max-w-xl rounded-3xl bg-[#1e1e2f] text-white shadow-2xl border border-gray-700 backdrop-blur-xl overflow-hidden z-10">
-      
-      <div class="flex items-center justify-between px-6 py-5 border-b border-gray-600 bg-[#2a2a3b]">
-        <h3 class="text-2xl font-semibold tracking-tight">Escolha a playlist</h3>
-        <button
-          @click="close"
-          class="text-white bg-transparent hover:text-red-400 hover:bg-red-400/10 rounded-full transition p-1.5 ml-4"
-          aria-label="Fechar modal"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Lista de playlists -->
-      <div class="max-h-96 overflow-y-auto divide-y divide-gray-700">
-        <div
-          v-for="playlist in playlists"
-          :key="playlist.id"
-          class="flex items-center px-6 py-4 hover:bg-gray-700/30 transition-colors cursor-pointer group"
-          @click="togglePlaylistSelection(playlist.id)"
-        >
-          <div class="relative">
-            <input
-              type="checkbox"
-              :id="'playlist-' + playlist.id"
-              :value="playlist.id"
-              v-model="selectedPlaylistIds"
-              class="sr-only"
-            />
+        <div class="modal-body p-0" style="max-height: 60vh; overflow-y: auto">
+          <div class="list-group list-group-flush">
             <div
-              class="h-5 w-5 flex items-center justify-center rounded-full border-2 transition-all duration-200"
-              :class="selectedPlaylistIds.includes(playlist.id)
-                ? 'bg-gradient-to-tr from-purple-600 to-purple-500 border-purple-600'
-                : 'border-gray-500 group-hover:border-gray-400'"
+              v-for="playlist in playlists"
+              :key="playlist.id"
+              class="list-group-item list-group-item-action d-flex align-items-center py-3"
+              :style="{
+                backgroundColor: selectedPlaylistIds.includes(playlist.id)
+                  ? 'rgba(155, 77, 255, 0.15)'
+                  : 'transparent',
+                borderColor: '#4a2d6b',
+              }"
+              @click="togglePlaylistSelection(playlist.id)"
             >
-              <svg
-                v-if="selectedPlaylistIds.includes(playlist.id)"
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-3.5 w-3.5 text-white"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"
+              <div class="form-check form-check-lg me-3">
+                <input
+                  type="checkbox"
+                  :id="'playlist-' + playlist.id"
+                  :value="playlist.id"
+                  v-model="selectedPlaylistIds"
+                  class="form-check-input"
+                  :style="{
+                    backgroundColor: selectedPlaylistIds.includes(playlist.id)
+                      ? '#9b4dff'
+                      : 'transparent',
+                    borderColor: selectedPlaylistIds.includes(playlist.id)
+                      ? '#9b4dff'
+                      : '#bdb1c3',
+                  }"
+                  @click.stop
                 />
-              </svg>
+              </div>
+              <div class="d-flex align-items-center w-100">
+                <div class="flex-grow-1">
+                  <label
+                    :for="'playlist-' + playlist.id"
+                    class="form-check-label d-block mb-1 fw-bold text-white"
+                  >
+                    {{ playlist.name }}
+                  </label>
+                </div>
+                <i
+                  class="bi bi-check-circle-fill text-success ms-2"
+                  v-if="selectedPlaylistIds.includes(playlist.id)"
+                  style="font-size: 1.2rem"
+                ></i>
+              </div>
+            </div>
+
+            <div
+              v-if="playlists.length === 0"
+              class="text-center py-5 text-muted"
+            >
+              <i class="bi bi-music-note-beamed display-5"></i>
+              <p class="mt-3">Nenhuma playlist encontrada</p>
             </div>
           </div>
-          <label
-            :for="'playlist-' + playlist.id"
-            class="ml-4 text-base cursor-pointer flex-1 truncate"
-          >
-            {{ playlist.name }}
-          </label>
         </div>
-      </div>
 
-      <!-- Footer -->
-      <div class="px-6 py-4 border-t border-gray-700 bg-[#2a2a3b] flex justify-end">
-        <button
-          @click="confirmSelection"
-          :disabled="!selectedPlaylistIds.length"
-          class="px-6 py-2 rounded-full font-medium text-white bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md"
-        >
-          Adicionar a {{ selectedPlaylistIds.length }} playlist{{ selectedPlaylistIds.length !== 1 ? 's' : '' }}
-        </button>
+        <div class="modal-footer border-top border-secondary">
+          <button type="button" class="btn btn-outline-light" @click="close">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="confirmSelection"
+            :disabled="!selectedPlaylistIds.length"
+          >
+            <i class="bi bi-plus-circle me-1"></i>
+            Adicionar a {{ selectedPlaylistIds.length }} playlist{{
+              selectedPlaylistIds.length !== 1 ? "s" : ""
+            }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -82,52 +112,79 @@ export default {
   props: {
     playlists: Array,
     show: Boolean,
-    currentMusic: Object
+    currentMusic: Object,
   },
   data() {
     return {
-      selectedPlaylistIds: []
-    }
+      selectedPlaylistIds: [],
+    };
   },
   methods: {
     close() {
-      this.$emit('close')
+      this.$emit("close");
     },
     confirmSelection() {
-      this.$emit('add-to-playlists', this.selectedPlaylistIds)
-      this.close()
+      this.$emit("add-to-playlists", this.selectedPlaylistIds);
+      this.close();
     },
     togglePlaylistSelection(playlistId) {
-      const index = this.selectedPlaylistIds.indexOf(playlistId)
+      const index = this.selectedPlaylistIds.indexOf(playlistId);
       if (index === -1) {
-        this.selectedPlaylistIds.push(playlistId)
+        this.selectedPlaylistIds.push(playlistId);
       } else {
-        this.selectedPlaylistIds.splice(index, 1)
+        this.selectedPlaylistIds.splice(index, 1);
       }
-    }
+    },
   },
   watch: {
     show(newVal) {
       if (!newVal) {
-        this.selectedPlaylistIds = []
+        this.selectedPlaylistIds = [];
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-::-webkit-scrollbar {
+.modal-content {
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+}
+
+.list-group-item {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: rgba(155, 77, 255, 0.1) !important;
+}
+
+.modal-body::-webkit-scrollbar {
   width: 8px;
 }
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
+
+.modal-body::-webkit-scrollbar-track {
+  background: #2d1f46;
 }
-::-webkit-scrollbar-thumb {
-  background-color: #4b4b4b;
+
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: #4a2d6b;
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background-color: #666;
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background-color: #5a3a7b;
+}
+
+.form-check-input {
+  width: 1.2em;
+  height: 1.2em;
+  margin-top: 0.1em;
+}
+
+.form-check-input:checked {
+  background-color: #9b4dff;
+  border-color: #9b4dff;
 }
 </style>

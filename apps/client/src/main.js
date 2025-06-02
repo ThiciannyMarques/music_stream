@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
-import draggable from 'vuedraggable';
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './assets/styles/main.scss'
+import 'bootstrap'
 
 createApp(App).mount('#app')
