@@ -12,7 +12,7 @@ Este é um projeto full stack que simula um app de stream de musica, que consist
 
 1. Clone o repositório:
    ```bash
-   git clone [URL_DO_REPOSITORIO]
+   git clone https://github.com/ThiciannyMarques/music_stream.git
    ```
 
 2. Instale as dependências tanto para o cliente quanto para o servidor:
