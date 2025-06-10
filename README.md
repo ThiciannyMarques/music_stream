@@ -6,7 +6,7 @@ Este é um projeto full stack que simula um app de stream de musica, que consist
 
 - Node.js (versão 18 ou superior)
 - npm (versão 9 ou superior) ou yarn
-- SQLite3 (para o banco de dados do servidor)
+- SQLite3
 
 ## 🛠 Instalação
 
@@ -70,7 +70,7 @@ npm run test:watch
 npm run test:coverage
 ```
 
-### Servidor (Node.js/Express)
+### Servidor
 
 Para executar os testes do servidor:
 
@@ -106,11 +106,11 @@ Recomendamos verificar regularmente por atualizações e relatar quaisquer probl
 - Vue.js 3
 - Vite
 - Bootstrap 5
-- Vitest (para testes)
-- Axios (para requisições HTTP)
+- Vitest
+- Axios
 
 ### Servidor
 - Express
-- Knex (Query Builder)
-- SQLite3 (banco de dados)
-- Jest (para testes)
+- Knex
+- SQLite3
+- Jest
